@@ -10,7 +10,7 @@ https://github.com/tmk/tmk_keyboard
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
+the Free Software Foundation, either version 2 of the License, or
 any later version.
 
 This program is distributed in the hope that it will be useful,
@@ -25,6 +25,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "keycode.h"
 #include "keymap.h"
+
+
+#define KEYMAPS_SIZE    (sizeof(keymaps) / sizeof(keymaps[0]))
+#define FN_ACTIONS_SIZE (sizeof(fn_actions) / sizeof(fn_actions[0]))
 
 
 /* ErgoDox keymap definition macro */
@@ -79,27 +83,27 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // right hand
         6,   7,   8,   9,   0,   MINS,EQL,
         Y,   U,   I,   O,   P,   LBRC,RBRC,
-        H,   J,   K,   L,   SCLN,SLSH,BSLS,
-        N,   M,   COMM,DOT, QUOT,UP  ,BSLS,
+        H,   J,   K,   L,   SCLN,QUOT,RSFT,
+        N,   M,   COMM,DOT, SLSH,UP  ,BSLS,
         ENT, TRNS,TRNS,TRNS,LEFT,DOWN,RGHT,
         ESC, CAPS,PGUP,PGDN,FN1, SPC, BSPC
     ),
 
     KEYMAP(  // layer 1 : function and symbol keys
         // left hand
-        TRNS,F1,  F2,  F3,  F4,  F5,
+        ESC,F1,  F2,  F3,  F4,  F5,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+        VOLU,TRNS,TRNS,TRNS,TRNS,VOLD,
+        TRNS,TRNS,MUTE,TRNS,TRNS,TRNS,
         // right hand
         F6,  F7,  F8,  F9,  F10, F11, F12,
+        TRNS,TRNS,TRNS,TRNS,PSCR,PAUS,NLCK,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS
+        VOLD,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+        TRNS,TRNS,TRNS,TRNS,TRNS,MUTE,VOLU
     ),
 
     KEYMAP(  // layer 2 : keyboard functions
@@ -155,10 +159,9 @@ static const uint16_t PROGMEM fn_actions[] = {
     ACTION_LAYER_SET(0, ON_PRESS),                  // FN4 - set Layer0
 };
 
+
 void action_function(keyrecord_t *event, uint8_t id, uint8_t opt) { }
 
-#define KEYMAPS_SIZE    (sizeof(keymaps) / sizeof(keymaps[0]))
-#define FN_ACTIONS_SIZE (sizeof(fn_actions) / sizeof(fn_actions[0]))
 
 /* translates key to keycode */
 uint8_t keymap_key_to_keycode(uint8_t layer, keypos_t key) {
@@ -170,6 +173,7 @@ uint8_t keymap_key_to_keycode(uint8_t layer, keypos_t key) {
     }
 }
 
+
 /* translates Fn keycode to action */
 action_t keymap_fn_to_action(uint8_t keycode) {
     action_t action;
@@ -180,5 +184,3 @@ action_t keymap_fn_to_action(uint8_t keycode) {
     }
     return action;
 }
-
-

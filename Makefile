@@ -1,5 +1,5 @@
 # Target file name (without extension).
-TARGET = ergodox
+TARGET = tinykeyboard
 
 # Directory common source filess exist
 TMK_DIR = tmk/core
@@ -9,8 +9,7 @@ TARGET_DIR = .
 
 # project specific files
 SRC = keymap.c \
-	matrix.c \
-	led.c \
+	tinykeyboard.c \
 	twimaster.c
 
 CONFIG_H = config.h
@@ -88,6 +87,6 @@ include $(TMK_DIR)/common.mk
 include $(TMK_DIR)/rules.mk
 
 burn:
-	sudo sudo dfu-programmer atmega32u4 erase 
-	sudo dfu-programmer atmega32u4 flash ergodox.hex
+	sudo dfu-programmer atmega32u4 erase 
+	sudo dfu-programmer atmega32u4 flash $(TARGET).hex
 	sudo dfu-programmer atmega32u4 launch
